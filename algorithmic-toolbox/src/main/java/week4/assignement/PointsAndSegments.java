@@ -1,51 +1,63 @@
 package week4.assignement;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 public class PointsAndSegments {
 
-    protected static int[] fastCountSegments(int[] starts, int[] ends, int[] points) {
-        Segment[] segments = new Segment[starts.length];
-        for (int i = 0; i < starts.length; i++) {
-            segments[i] = new Segment(starts[i], ends[i]);
-        }
-        Arrays.sort(segments, Comparator.comparing(Segment::getStart));
+    /**
+     * hint for solving this here:
+     * https://www.coursera.org/learn/algorithmic-toolbox/discussions/all/threads/QJ1jK9wNEeWdPBL2iFTrAw/replies/Ihiw4txhEeWK5g7mfcS2Xw/comments/oyAMaeIiEeWyqwpvChh66Q
+     *
+     */
+    protected static int[] fastCountSegments(long[] starts, long[] ends, long[] points) {
         int[] cnt = new int[points.length];
+        List<Elem> list = new ArrayList<>(starts.length * 2 + points.length);
+        for (int i = 0; i < starts.length; i++) {
+            list.add(new Elem(starts[i], "l", i));
+            list.add(new Elem(ends[i], "r", i));
+        }
         for (int i = 0; i < points.length; i++) {
-            cnt[i] = binarySearchCount(segments, points[i]);
+            list.add(new Elem(points[i], "p", i));
+        }
+        list.sort(Comparator.comparing(Elem::getValue).thenComparing(Elem::getType));
+        int covered = 0;
+        for (int i = 0; i < list.size(); i++) {
+            Elem curr = list.get(i);
+            switch (curr.type) {
+                case "l":
+                    covered++;
+                    break;
+                case "r":
+                    covered--;
+                    break;
+                case "p":
+                    cnt[curr.index] = covered;
+            }
         }
         return cnt;
     }
 
+    protected static class Elem {
+        final long value;
+        final String type;
+        int index;
 
-    protected static int binarySearchCount(Segment[] segments, int point) {
-        int low = 0, high = segments.length - 1;
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            Segment midSegment = segments[mid];
-            if (midSegment.start <= point && point <= midSegment.end) {
-                int count = 1; //one segment already found
-                int j = mid + 1;
-                //check from mid + 1 to high for segments corresponding
-                while (j <= high && segments[j].start <= point && point <= segments[j].end) {
-                    count++;
-                    j++;
-                }
-                j = mid - 1;
-                while (j >= low && segments[j].start <= point && point <= segments[j].end) {
-                    count++;
-                    j--;
-                }
-                return count;
-            } else if (point < midSegment.start) {
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
+        public Elem(long value, String type, int index) {
+            this.value = value;
+            this.type = type;
+            this.index = index;
         }
-        return 0;
+
+        public long getValue() {
+            return value;
+        }
+
+        public String getType() {
+            return type;
+        }
     }
 
     public static void main(String[] args) {
@@ -53,9 +65,9 @@ public class PointsAndSegments {
         int n, m;
         n = scanner.nextInt();
         m = scanner.nextInt();
-        int[] starts = new int[n];
-        int[] ends = new int[n];
-        int[] points = new int[m];
+        long[] starts = new long[n];
+        long[] ends = new long[n];
+        long[] points = new long[m];
         for (int i = 0; i < n; i++) {
             starts[i] = scanner.nextInt();
             ends[i] = scanner.nextInt();
@@ -67,20 +79,6 @@ public class PointsAndSegments {
         int[] cnt = fastCountSegments(starts, ends, points);
         for (int x : cnt) {
             System.out.print(x + " ");
-        }
-    }
-
-    protected static class Segment {
-        final int start;
-        final int end;
-
-        public Segment(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        public int getStart() {
-            return start;
         }
     }
 }
