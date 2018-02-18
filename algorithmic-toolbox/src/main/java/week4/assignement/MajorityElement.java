@@ -13,9 +13,8 @@ public class MajorityElement {
         return store.entrySet()
                 .stream()
                 .filter(e -> e.getValue() >= mid)
-                .map(Map.Entry::getKey)
                 .findAny()
-                .orElse(0);
+                .isPresent() ? 1 : 0;
     }
 
     public static void main(String[] args) {

@@ -34,4 +34,8 @@ class MajorityElementTest {
     @Test @DisplayName("should return element if it appears n/2 + 1 times for odd length array") void shouldReturnElement2() {
         assertEquals(1, MajorityElement.getMajorityElement(new int[]{1,2,1,3,1,4,1,5,1}));
     }
+
+    @Test void shouldReturnElementSubmissionTest() {
+        assertEquals(1, MajorityElement.getMajorityElement(new int[]{2,3,9,2,2}));
+    }
 }
