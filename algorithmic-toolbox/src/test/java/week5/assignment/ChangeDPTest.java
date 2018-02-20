@@ -1,6 +1,7 @@
-package week5;
+package week5.assignment;
 
 import org.junit.jupiter.api.Test;
+import week5.assignment.ChangeDP;
 
 import static org.junit.jupiter.api.Assertions.*;
 
