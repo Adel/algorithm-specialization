@@ -4,9 +4,6 @@ import java.util.*;
 
 public class Knapsack {
 
-    /*
-
-     */
     static int optimalWeight(int W, int[] items) {
         int[][] values = new int[W + 1][items.length + 1];
         for (int i = 1; i <= items.length; i++) {
