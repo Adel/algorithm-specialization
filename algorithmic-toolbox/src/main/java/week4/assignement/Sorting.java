@@ -7,13 +7,24 @@ public class Sorting {
     private static Random random = new Random();
 
     private static int[] partition3(int[] a, int l, int r) {
-        //write your code here
-
-
-        int m1 = l;
-        int m2 = r;
-        int[] m = {m1, m2};
-        return m;
+        int x = a[l];
+        int i = l + 1, m1 = l, m2 = r;
+        while (i <= m2) {
+            if (a[i] < x) {
+                int t = a[i];
+                a[i] = a[m1];
+                a[m1] = t;
+                m1++;
+            } else if (a[i] > x) {
+                int t = a[m2];
+                a[m2] = a[i];
+                a[i] = t;
+                m2--;
+            } else {
+                i++;
+            }
+        }
+        return new int[]{m1, m2};
     }
 
     private static int partition2(int[] a, int l, int r) {
@@ -33,7 +44,7 @@ public class Sorting {
         return j;
     }
 
-    private static void randomizedQuickSort(int[] a, int l, int r) {
+    static void randomizedQuickSort(int[] a, int l, int r) {
         if (l >= r) {
             return;
         }
@@ -42,9 +53,9 @@ public class Sorting {
         a[l] = a[k];
         a[k] = t;
         //use partition3
-        int m = partition2(a, l, r);
-        randomizedQuickSort(a, l, m - 1);
-        randomizedQuickSort(a, m + 1, r);
+        int[] arr = partition3(a, l, r);
+        randomizedQuickSort(a, l, arr[0] - 1);
+        randomizedQuickSort(a, arr[1] + 1, r);
     }
 
     public static void main(String[] args) {
