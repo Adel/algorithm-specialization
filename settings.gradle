@@ -1,3 +1,4 @@
 rootProject.name = 'algorithm-specialization'
 include 'algorithmic-toolbox'
+include 'data-structures'
 

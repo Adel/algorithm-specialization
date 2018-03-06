@@ -46,3 +46,6 @@ gradle-app.setting
 
 #intellij
 .idea
+
+#out folder
+out
