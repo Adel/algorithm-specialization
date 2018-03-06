@@ -23,30 +23,60 @@ public class tree_height {
         }
     }
 
+    static class Node {
+        List<Integer> children = new ArrayList<>();
+        boolean visited = false;
+    }
+
     public class TreeHeight {
         int n;
-        int parent[];
+        Node[] nodes;
+        int root;
 
         void read() throws IOException {
             FastScanner in = new FastScanner();
             n = in.nextInt();
-            parent = new int[n];
+            nodes = new Node[n];
             for (int i = 0; i < n; i++) {
-                parent[i] = in.nextInt();
+                nodes[i] = new Node();
+            }
+            for (int i = 0; i < n; i++) {
+                int parent = in.nextInt();
+                if (parent == -1) {
+                    root = i;
+                } else {
+                    nodes[i].children.add(parent);
+                }
             }
         }
 
-        int computeHeight() {
-            // Replace this code with a faster implementation
+        int computeHeight(Node[] nodes, int root) {
+            if (nodes.length == 0) {
+                return 0;
+            }
             int maxHeight = 0;
-            for (int vertex = 0; vertex < n; vertex++) {
-                int height = 0;
-                for (int i = vertex; i != -1; i = parent[i])
+
+            Stack<Integer> stack = new Stack<>();
+            stack.push(root);
+            int height = 0;
+            while (!stack.isEmpty()) {
+                Node currentNode = nodes[stack.peek()];
+                if (currentNode.visited) {
+                    maxHeight = Math.max(height, maxHeight);
+                    height = 0;
+                    stack.pop();
+                } else {
+                    currentNode.visited = true;
                     height++;
-                maxHeight = Math.max(maxHeight, height);
+                    currentNode.children.forEach(e -> stack.push(e));
+                }
             }
             return maxHeight;
         }
+    }
+
+    TreeHeight createTreeHeight() {
+        return new TreeHeight();
     }
 
     static public void main(String[] args) throws IOException {
@@ -63,6 +93,6 @@ public class tree_height {
     public void run() throws IOException {
         TreeHeight tree = new TreeHeight();
         tree.read();
-        System.out.println(tree.computeHeight());
+        System.out.println(tree.computeHeight(tree.nodes, tree.root));
     }
 }
