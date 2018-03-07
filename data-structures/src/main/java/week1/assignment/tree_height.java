@@ -25,7 +25,11 @@ public class tree_height {
 
     static class Node {
         List<Integer> children = new ArrayList<>();
-        boolean visited = false;
+        int height = 0;
+
+        boolean isLeaf() {
+            return children.size() == 0;
+        }
     }
 
     public class TreeHeight {
@@ -45,30 +49,28 @@ public class tree_height {
                 if (parent == -1) {
                     root = i;
                 } else {
-                    nodes[i].children.add(parent);
+                    nodes[parent].children.add(i);
                 }
             }
         }
 
-        int computeHeight(Node[] nodes, int root) {
+        int computeHeight() {
             if (nodes.length == 0) {
                 return 0;
             }
             int maxHeight = 0;
-
             Stack<Integer> stack = new Stack<>();
             stack.push(root);
-            int height = 0;
+            nodes[root].height = 1;
             while (!stack.isEmpty()) {
-                Node currentNode = nodes[stack.peek()];
-                if (currentNode.visited) {
-                    maxHeight = Math.max(height, maxHeight);
-                    height = 0;
-                    stack.pop();
+                Node currentNode = nodes[stack.pop()];
+                if (currentNode.isLeaf()) {
+                    maxHeight = Math.max(currentNode.height, maxHeight);
                 } else {
-                    currentNode.visited = true;
-                    height++;
-                    currentNode.children.forEach(e -> stack.push(e));
+                    currentNode.children.forEach(i -> {
+                        nodes[i].height = currentNode.height + 1;
+                        stack.push(i);
+                    });
                 }
             }
             return maxHeight;
@@ -93,6 +95,6 @@ public class tree_height {
     public void run() throws IOException {
         TreeHeight tree = new TreeHeight();
         tree.read();
-        System.out.println(tree.computeHeight(tree.nodes, tree.root));
+        System.out.println(tree.computeHeight());
     }
 }

@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -27,11 +29,10 @@ public class TestFiles {
                                 name = name.substring(0, name.length() - 2);
                             }
                             TestEntry entry = map.getOrDefault(name, new TestEntry());
-                            String line = lines.findFirst().get();
                             if (answer) {
-                                entry.output = line;
+                                entry.output = lines.findFirst().get();
                             } else {
-                                entry.input = line;
+                                lines.forEach(e -> entry.inputs.add(e));
                             }
                             map.put(name, entry);
                         } catch (IOException e) {
@@ -43,15 +44,15 @@ public class TestFiles {
     }
 
     public static class TestEntry {
-        private String input;
+        private List<String> inputs = new ArrayList<>();
         private String output;
 
-        public String getInput() {
-            return input;
+        public List<String> getInputs() {
+            return inputs;
         }
 
-        public void setInput(String input) {
-            this.input = input;
+        public void setInputs(List<String> inputs) {
+            this.inputs = inputs;
         }
 
         public String getOutput() {
