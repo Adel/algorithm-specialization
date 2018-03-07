@@ -23,14 +23,14 @@ class tree_heightTest {
 
     @Test
     void shouldReturnZeroForEmptyTree() {
-        tree_height.TreeHeight treeHeight = new tree_height().createTreeHeight();
+        tree_height.TreeHeight treeHeight = new tree_height.TreeHeight();
         treeHeight.nodes = new Node[0];
         assertEquals(0, treeHeight.computeHeight());
     }
 
     @Test
     void shouldReturnOneForOneRootElement() {
-        tree_height.TreeHeight treeHeight = new tree_height().createTreeHeight();
+        tree_height.TreeHeight treeHeight = new tree_height.TreeHeight();
         Node[] nodes = new Node[1];
         for (int i = 0; i < nodes.length; i++) {
             nodes[i] = new Node();
@@ -43,7 +43,7 @@ class tree_heightTest {
     @Test
     @DisplayName("should return 2 for one root and multiple children")
     void shouldReturnOneForCorrectHeight1() {
-        tree_height.TreeHeight treeHeight = new tree_height().createTreeHeight();
+        tree_height.TreeHeight treeHeight = new tree_height.TreeHeight();
         Node[] nodes = new Node[4];
         for (int i = 0; i < nodes.length; i++) {
             nodes[i] = new Node();
@@ -60,7 +60,7 @@ class tree_heightTest {
     @Test
     @DisplayName("should return 3 for root with grand children")
     void shouldReturnOneForCorrectHeight2() {
-        tree_height.TreeHeight treeHeight = new tree_height().createTreeHeight();
+        tree_height.TreeHeight treeHeight = new tree_height.TreeHeight();
         Node[] nodes = new Node[6];
         for (int i = 0; i < nodes.length; i++) {
             nodes[i] = new Node();
@@ -78,7 +78,7 @@ class tree_heightTest {
     @Test
     @DisplayName("should return correct level if each node has one child")
     void shouldReturnOneForCorrectHeight3() {
-        tree_height.TreeHeight treeHeight = new tree_height().createTreeHeight();
+        tree_height.TreeHeight treeHeight = new tree_height.TreeHeight();
         Node[] nodes = new Node[6];
         for (int i = 0; i < nodes.length; i++) {
             nodes[i] = new Node();
@@ -114,7 +114,7 @@ class tree_heightTest {
                     String input = inputs.get(0) + "\n" + inputs.get(1);
                     InputStream in = new ByteArrayInputStream(input.getBytes());
                     System.setIn(in);
-                    tree_height.TreeHeight treeHeight = new tree_height().createTreeHeight();
+                    tree_height.TreeHeight treeHeight = new tree_height.TreeHeight();
                     treeHeight.read();
                     assertEquals(e.getValue().getOutput(), treeHeight.computeHeight() + "");
                 }))

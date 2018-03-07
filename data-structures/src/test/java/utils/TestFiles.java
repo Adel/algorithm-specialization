@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TestFiles {
@@ -32,7 +33,7 @@ public class TestFiles {
                             if (answer) {
                                 entry.output = lines.findFirst().get();
                             } else {
-                                lines.forEach(e -> entry.inputs.add(e));
+                                entry.inputs.addAll(lines.collect(Collectors.toList()));
                             }
                             map.put(name, entry);
                         } catch (IOException e) {

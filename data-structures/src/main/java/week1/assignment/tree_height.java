@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 
 public class tree_height {
-    class FastScanner {
+    static class FastScanner {
         StringTokenizer tok = new StringTokenizer("");
         BufferedReader in;
 
@@ -32,7 +32,7 @@ public class tree_height {
         }
     }
 
-    public class TreeHeight {
+    public static class TreeHeight {
         int n;
         Node[] nodes;
         int root;

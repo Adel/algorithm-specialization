@@ -26,17 +26,17 @@ class Bracket {
                 return false;
         }
     }
-}
-
-class check_brackets {
 
     public static void main(String[] args) throws IOException {
         InputStreamReader inputStream = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(inputStream);
         String text = reader.readLine();
-
-        System.out.println(isBalanced(text));
+        CheckBrackets check = new CheckBrackets();
+        System.out.println(check.checkString(text));
     }
+}
+
+class CheckBrackets {
 
     static String checkString(String text) {
         int pos = isBalanced(text);
