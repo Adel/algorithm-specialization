@@ -93,16 +93,6 @@ class tree_heightTest {
         assertEquals(6, treeHeight.computeHeight());
     }
 
-    @Test
-    void testScanner() throws IOException {
-        String input = "5\n" + "4 -1 4 1 1";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        tree_height.TreeHeight treeHeight = new tree_height().createTreeHeight();
-        treeHeight.read();
-        assertEquals(5, treeHeight.nodes.length);
-    }
-
     @TestFactory
     Collection<DynamicTest> shouldGetCorrectResultForTestFiles() throws IOException {
         return TestFiles.loadFiles("tree_height")
@@ -116,7 +106,7 @@ class tree_heightTest {
                     System.setIn(in);
                     tree_height.TreeHeight treeHeight = new tree_height.TreeHeight();
                     treeHeight.read();
-                    assertEquals(e.getValue().getOutput(), treeHeight.computeHeight() + "");
+                    assertEquals(e.getValue().getOutputs().get(0), treeHeight.computeHeight() + "");
                 }))
                 .collect(Collectors.toList());
     }

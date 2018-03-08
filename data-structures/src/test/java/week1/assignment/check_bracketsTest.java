@@ -17,7 +17,7 @@ class check_bracketsTest {
         return TestFiles.loadFiles("check_brackets")
                 .entrySet()
                 .stream()
-                .map(e -> DynamicTest.dynamicTest(e.getKey(), () -> assertEquals(e.getValue().getOutput(), CheckBrackets.checkString(e.getValue().getInputs().get(0)))))
+                .map(e -> DynamicTest.dynamicTest(e.getKey(), () -> assertEquals(e.getValue().getOutputs().get(0), CheckBrackets.checkString(e.getValue().getInputs().get(0)))))
                 .collect(Collectors.toList());
     }
 

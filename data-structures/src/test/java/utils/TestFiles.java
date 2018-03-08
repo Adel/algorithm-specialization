@@ -31,7 +31,7 @@ public class TestFiles {
                             }
                             TestEntry entry = map.getOrDefault(name, new TestEntry());
                             if (answer) {
-                                entry.output = lines.findFirst().get();
+                                entry.outputs = lines.collect(Collectors.toList());
                             } else {
                                 entry.inputs.addAll(lines.collect(Collectors.toList()));
                             }
@@ -46,7 +46,7 @@ public class TestFiles {
 
     public static class TestEntry {
         private List<String> inputs = new ArrayList<>();
-        private String output;
+        private List<String> outputs = new ArrayList<>();
 
         public List<String> getInputs() {
             return inputs;
@@ -56,12 +56,12 @@ public class TestFiles {
             this.inputs = inputs;
         }
 
-        public String getOutput() {
-            return output;
+        public List<String> getOutputs() {
+            return outputs;
         }
 
-        public void setOutput(String output) {
-            this.output = output;
+        public void setOutputs(List<String> outputs) {
+            this.outputs = outputs;
         }
     }
 }
